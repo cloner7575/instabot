@@ -11,6 +11,9 @@ from multiprocessing import Process
 
 from .tasks import login
 
+def index(request):
+
+    return render(request, 'index.html')
 
 def worker_login(worker, accounts):
     try:
