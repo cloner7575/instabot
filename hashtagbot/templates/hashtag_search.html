@@ -1,0 +1,137 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+    <script>
+        function showProcessingAlert() {
+            var processingAlert = document.getElementById("processing-alert");
+            processingAlert.classList.remove("d-none");
+            setTimeout(function () {
+                processingAlert.classList.add("d-none");
+            }, 3000);
+        }
+    </script>
+     <script>
+                    function showLoading() {
+                        alert("درخواست شما درحال پردازش میباشد. لطفاً منتظر بمانید.");
+                    }
+
+                    const form = document.querySelector('form');
+                    form.addEventListener('submit', function (event) {
+                        event.preventDefault();
+                        showLoading();
+                        setTimeout(() => {
+                            form.submit();
+                        }, 2000); // زمان منتظر ماندن در ثانیه
+                    });
+                </script>
+
+    <div class="container" style="display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            text-align: center;
+                            ">
+        <div class="card text-center" style="
+                            width: 100%;
+                            max-width: 600px;
+                            text-align: center;
+
+                            background-color: #264b5d;
+                            color: var(--body-fg);
+                            border-radius: 20px;">
+            <div class="card-header" style="
+
+                            font-size: 14px;
+                            ">
+                <h1 style="padding: 5px;
+                        color: white;
+">جست و جوی هشتگ</h1>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{% url 'search_hashtag' %}">
+                    {% csrf_token %}
+                    <div id="processing-alert" class="alert alert-warning d-none" role="alert">
+                        در حال پردازش درخواست، لطفاً منتظر بمانید.
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" name="hashtag" class="form-control" placeholder="کلمه را وارد کنید" style="margin: 2px 0;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 5px 6px;
+    margin-top: 0;
+    color: var(--body-fg);
+    background-color: var(--body-bg);">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary" onclick="showProcessingAlert()" style="
+                            margin-top: 10px;
+                            margin-bottom: 10px;
+                            padding: 3px 5px;
+                            background: var(--object-tools-bg);
+                            color: var(--object-tools-fg);
+                            font-weight: 400;
+                            font-size: 1rem;
+                            letter-spacing: 0.5px;
+">جست و جو
+                            </button>
+                            <div class="input-group mb-3">
+                                <a class="my-button" onclick="location.href='/admin/hashtagbot/accountinfo'" style="
+                        display: inline-block;
+                        padding: 10px 20px;
+                        background-color: #79aec8;
+                        color: white;
+                        text-align: center;
+                        text-decoration: none;
+                        font-size: 14px;
+                        cursor: pointer;
+                        border-radius: 10px ;
+                        border-color: #ced4da;
+                        margin-top: 30px;
+                        margin-bottom: 10px;
+">بازگشت به صفحه
+                                    قبل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+
+
+                {% if error %}
+                    <div class="alert alert-danger" role="alert"
+                         style="
+                        display: inline-block;
+                        padding: 10px 50px;
+                        background-color: #f1184b;
+                        color: white;
+                        text-align: center;
+                        text-decoration: none;
+                        font-size: 14px;
+                        border-radius: 10px ;
+                        border-color: #ced4da;
+                        margin-top: 30px;
+                        margin-bottom: 10px;
+
+">
+                        {{ error }}
+                    </div>
+                {% elif success %}
+                    <div class="alert alert-success" role="alert" style="
+                        display: inline-block;
+                        padding: 10px 50px;
+                        background-color: #499a50;
+                        color: white;
+                        text-align: center;
+                        text-decoration: none;
+                        font-size: 14px;
+                        border-radius: 10px ;
+                        border-color: #ced4da;
+                        margin-top: 30px;
+                        margin-bottom: 10px;
+">
+                        {{ success }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
