@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-x00@d6496v=xpg+u(f*-5d6k1y2z-ba*plgzkg+1@7*r!m*gj9
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS=['https://te3t.lucretius.network/',]
+CSRF_TRUSTED_ORIGINS = ['https://te3t.lucretius.network/', ]
 
 # Application definition
 
@@ -39,18 +39,20 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'django_crontab',
+    'corsheaders',
     "hashtagbot",
     "telegrambot",
 ]
 
 MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = "instabot.urls"
@@ -138,5 +140,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CRONJOBS = [
-    ('*/20  * * * *', 'hashtagbot.tasks.run_bot', )
+    ('*/20  * * * *', 'hashtagbot.tasks.run_bot',)
 ]
+CORS_ORIGIN_ALLOW_ALL = True
