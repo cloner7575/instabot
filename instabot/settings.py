@@ -27,9 +27,9 @@ SECRET_KEY = "django-insecure-x00@d6496v=xpg+u(f*-5d6k1y2z-ba*plgzkg+1@7*r!m*gj9
 DEBUG = False
 
 ALLOWED_HOSTS = ['te3t.lucretius.network','localhost', '127.0.0.1']
-
+CSRF_TRUSTED_ORIGINS = ['https://*.te3t.lucretius.network','https://*.127.0.0.1']
 # Application definition
-
+CSRF_COOKIE_SECURE=False
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
