@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-x00@d6496v=xpg+u(f*-5d6k1y2z-ba*plgzkg+1@7*r!m*gj9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://te3t.lucretius.network/','te3t.lucretius.network/']
 CSRF_TRUSTED_ORIGINS = ['https://te3t.lucretius.network/', ]
 
 # Application definition
@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
