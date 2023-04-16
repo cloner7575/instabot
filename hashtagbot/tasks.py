@@ -58,7 +58,9 @@ def login(workers, accounts):
 
 
 def run_bot():
+    print("run_bot is running")
     users = AccountInfo.objects.values('user').filter(is_checked=False)
+    print(f"users: {users}")
     for user in users:
         workers = Worker.objects.filter(is_active=True, is_working=False, user=user['user'])
         accounts = AccountInfo.objects.filter(is_checked=False, user=user['user'])
