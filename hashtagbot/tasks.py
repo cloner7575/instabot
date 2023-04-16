@@ -37,6 +37,9 @@ def worker_login(worker, accounts):
 
 
 def login(workers, accounts):
+    print("cron is running")
+    print(f"workers: {workers}")
+    print(f"accounts: {accounts}")
     if workers:
         try:
 
