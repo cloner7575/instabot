@@ -139,6 +139,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CRONJOBS = [
-    ('*/20  * * * *', 'hashtagbot.tasks.run_bot',)
+    ('*/1  * * * *', 'hashtagbot.tasks.run_bot',)
 ]
 CORS_ORIGIN_ALLOW_ALL = True
