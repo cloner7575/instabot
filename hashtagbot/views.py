@@ -95,28 +95,28 @@ class Search(View):
 
         return render(request, 'hashtag_search.html', {'success': 'اطلاعات دریافت شد', 'context': context})
 
-# class AccountInfoResult(View):
-#     def get(self, request):
-#         accounts = AccountInfo.objects.filter(is_checked=False,user=request.user)
-#         context = {
-#             'accounts': accounts
-#         }
-#         return render(request, 'account_info.html', context)
-#
-#     def post(self, request):
-#
-#
-#         workers = Worker.objects.filter(is_active=True, is_working=False,user=request.user)
-#         accounts = AccountInfo.objects.filter(is_checked=False,user=request.user)
-#         if workers:
-#             try:
-#                 login(workers, accounts)
-#
-#                 return render(request, 'account_info.html', {'message': 'اطلاعات در حال دریافت می باشد'})
-#             except Exception as e:
-#                 print(e)
-#                 return render(request, 'account_info.html', {'message': 'مشکلی پیش آمده است'})
-#
-#         return render(request, 'account_info.html', {'message': 'کارگری یافت نشد'})
+class AccountInfoResult(View):
+    def get(self, request):
+        accounts = AccountInfo.objects.filter(is_checked=False,user=request.user)
+        context = {
+            'accounts': accounts
+        }
+        return render(request, 'account_info.html', context)
+
+    def post(self, request):
+
+
+        workers = Worker.objects.filter(is_active=True, is_working=False,user=request.user)
+        accounts = AccountInfo.objects.filter(is_checked=False,user=request.user)
+        if workers:
+            try:
+                login(workers, accounts)
+
+                return render(request, 'account_info.html', {'success': 'اطلاعات در حال دریافت می باشد'})
+            except Exception as e:
+                print(e)
+                return render(request, 'account_info.html', {'error': 'مشکلی پیش آمده است'})
+
+        return render(request, 'account_info.html', {'error': 'کارگری یافت نشد'})
 #
 

@@ -1,0 +1,109 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+    <div class="container" style="display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            text-align: center;
+                            ">
+        <div class="card text-center" style="
+                            width: 100%;
+                            max-width: 600px;
+                            text-align: center;
+
+                            background-color: #264b5d;
+                            color: var(--body-fg);
+                            border-radius: 20px;">
+            <div class="card-header" style="
+
+                            font-size: 14px;
+                            ">
+                <h1 style="padding: 5px;
+                        color: white;
+">دریافت اطلاعات</h1>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{% url 'account_info_result' %}">
+                    {% csrf_token %}
+                    <div id="processing-alert" class="alert alert-warning d-none" role="alert">
+                        در حال پردازش درخواست، لطفاً منتظر بمانید.
+                    </div>
+                    <div class="input-group mb-3">
+
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary" onclick="showProcessingAlert()" style="
+                            margin-top: 10px;
+                            margin-bottom: 10px;
+                            padding: 3px 5px;
+                            background: var(--object-tools-bg);
+                            color: var(--object-tools-fg);
+                            font-weight: 400;
+                            font-size: 1rem;
+                            letter-spacing: 0.5px;
+">دریافت اطلاعات</button>
+                            <div class="input-group mb-3">
+                                <a class="my-button" onclick="location.href='/admin/hashtagbot/accountinfo'" style="
+                        display: inline-block;
+                        padding: 10px 20px;
+                        background-color: #79aec8;
+                        color: white;
+                        text-align: center;
+                        text-decoration: none;
+                        font-size: 14px;
+                        cursor: pointer;
+                        border-radius: 10px ;
+                        border-color: #ced4da;
+                        margin-top: 30px;
+                        margin-bottom: 10px;
+">بازگشت به صفحه
+                                    قبل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+
+
+                {% if error %}
+                    <div class="alert alert-danger" role="alert"
+
+
+                    >
+                        <a class="my-button" onclick="location.href='/admin/hashtagbot/worker/'" style="
+                        display: inline-block;
+                        padding: 10px 50px;
+                        background-color: #f1184b;
+                        color: white;
+                        text-align: center;
+                        text-decoration: none;
+                        font-size: 14px;
+                        border-radius: 10px ;
+                        border-color: #ced4da;
+                        margin-top: 30px;
+                        margin-bottom: 10px;
+                        cursor: pointer;
+"> {{ error }}</a>
+
+                    </div>
+                {% elif success %}
+                    <div class="alert alert-success" role="alert" style="
+                        display: inline-block;
+                        padding: 10px 50px;
+                        background-color: #499a50;
+                        color: white;
+                        text-align: center;
+                        text-decoration: none;
+                        font-size: 14px;
+                        border-radius: 10px ;
+                        border-color: #ced4da;
+                        margin-top: 30px;
+                        margin-bottom: 10px;
+">
+                        {{ success }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

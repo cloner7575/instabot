@@ -1,6 +1,8 @@
 import json
 import time
 from multiprocessing import Process
+
+from django.db.models import Count
 from instagrapi import Client
 import django
 
@@ -59,10 +61,12 @@ def login(workers, accounts):
 
 def run_bot():
     print("run_bot is running")
-    users = AccountInfo.objects.values('user').filter(is_checked=False)
+    users = AccountInfo.objects.values('user').annotate(user_count=Count('user')).filter(user_count__gt=1)
+
+
     print(f"users: {users}")
     for user in users:
-        workers = Worker.objects.filter(is_active=True, is_working=False, user=user['user'])
-        accounts = AccountInfo.objects.filter(is_checked=False, user=user['user'])
+        workers = Worker.objects.filter(is_active=True, is_working=False, user_id=user['user'])
+        accounts = AccountInfo.objects.filter(is_checked=False, user_id=user['user'])
         p = Process(target=login, args=(workers, accounts,))
         p.start()

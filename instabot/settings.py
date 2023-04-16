@@ -77,26 +77,26 @@ WSGI_APPLICATION = "instabot.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#database
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'instabot',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'instabot',
-        'USER': 'p7ayam',
-        'PASSWORD': '!LiL!Sor2087?P7@',
-        'HOST': '51.79.156.167',
-        'PORT': '3313',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'instabot',
+#         'USER': 'p7ayam',
+#         'PASSWORD': '!LiL!Sor2087?P7@',
+#         'HOST': '51.79.156.167',
+#         'PORT': '3313',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
