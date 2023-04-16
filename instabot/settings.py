@@ -24,9 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-x00@d6496v=xpg+u(f*-5d6k1y2z-ba*plgzkg+1@7*r!m*gj9"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS=['https://te3t.lucretius.network/','te3t.lucretius.network/']
 
 # Application definition
 
@@ -39,13 +40,14 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'django_crontab',
     "hashtagbot",
+    "telegrambot",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    # "django.middleware.csrf.CsrfViewMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -74,26 +76,26 @@ WSGI_APPLICATION = "instabot.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#database
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'instabot',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'instabot',
-        'USER': 'p7ayam',
-        'PASSWORD': '!LiL!Sor2087?P7@',
-        'HOST': '51.79.156.167',
-        'PORT': '3313',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'instabot',
+#         'USER': 'p7ayam',
+#         'PASSWORD': '!LiL!Sor2087?P7@',
+#         'HOST': '51.79.156.167',
+#         'PORT': '3313',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -118,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "fa-ir"
 
-TIME_ZONE = "Asia/Tehran"
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
