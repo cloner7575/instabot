@@ -28,11 +28,12 @@ def worker_login(worker, accounts):
             account.other_info = json.dumps(user_info)
             account.save()
             print(f"info of {account.username} is: {phone_number}")
-            time.sleep(5)
+            time.sleep(10)
         worker.is_working = False
         worker.save()
     except Exception as e:
         print(e)
+        worker.is_active = False
         worker.is_working = False
         worker.save()
         return
