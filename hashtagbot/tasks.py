@@ -15,6 +15,7 @@ def worker_login(worker, accounts):
     try:
         cl = Client()
         cl.login(worker.username, worker.password)
+        time.sleep(random.randint(10, 30))
         worker.is_working = True
         worker.save()
 
