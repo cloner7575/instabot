@@ -5,42 +5,46 @@ from django.shortcuts import render
 from django.views import View
 
 from instagrapi import Client
+from instagrapi.exceptions import ChallengeRequired
 # Create your views here.
 from .models import Worker, AccountInfo
 from multiprocessing import Process
 
-from .tasks import login
+from .tasks import login, change_password_handler, challenge_code_handler
+
 
 def index(request):
 
     return render(request, 'index.html')
 
-def worker_login(worker, accounts):
-    try:
-        cl = Client()
-        cl.login(worker.username, worker.password)
-        worker.is_working = True
-        worker.save()
-
-        print("Login success")
-        for account in accounts:
-            user_info = cl.user_info_by_username(account.username).dict()
-            phone_number = user_info['contact_phone_number']
-            if phone_number:
-                account.phone_number = phone_number
-                account.is_business = True
-            account.is_checked = True
-            account.other_info = json.dumps(user_info)
-            account.save()
-            print(f"info of {account.username} is: {phone_number}")
-            time.sleep(5)
-        worker.is_working = False
-        worker.save()
-    except Exception as e:
-        print(e)
-        worker.is_working = False
-        worker.save()
-        return
+# def worker_login(worker, accounts):
+#     try:
+#         cl = Client()
+#         cl.change_password_handler = change_password_handler
+#         cl.challenge_code_handler = challenge_code_handler
+#         cl.login(worker.username, worker.password)
+#         worker.is_working = True
+#         worker.save()
+#
+#         print("Login success")
+#         for account in accounts:
+#             user_info = cl.user_info_by_username(account.username).dict()
+#             phone_number = user_info['contact_phone_number']
+#             if phone_number:
+#                 account.phone_number = phone_number
+#                 account.is_business = True
+#             account.is_checked = True
+#             account.other_info = json.dumps(user_info)
+#             account.save()
+#             print(f"info of {account.username} is: {phone_number}")
+#             time.sleep(5)
+#         worker.is_working = False
+#         worker.save()
+#     except Exception as e:
+#         print(e)
+#         worker.is_working = False
+#         worker.save()
+#         return
 
 
 class Search(View):
@@ -57,6 +61,10 @@ class Search(View):
         if workers:
             try:
                 cl = Client()
+
+                cl.challenge_code_handler = challenge_code_handler
+                cl.change_password_handler = change_password_handler
+
                 cl.login(workers.username, workers.password)
                 workers.is_working = True
                 workers.save()
@@ -84,6 +92,9 @@ class Search(View):
                 }
                 workers.is_working = False
                 workers.save()
+
+
+
             except Exception as e:
                 print(e)
                 workers.is_working = False

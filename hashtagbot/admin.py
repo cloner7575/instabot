@@ -10,7 +10,7 @@ from openpyxl.workbook import Workbook
 # Register your models here.
 
 from .models import Worker, AccountInfo
-
+from .tasks import get_code_from_sms,challenge_code_handler,get_code_from_email,change_password_handler
 
 class WorkerAdmin(admin.ModelAdmin):
     list_display = ('username', 'is_active', 'is_working')
@@ -21,6 +21,9 @@ class WorkerAdmin(admin.ModelAdmin):
         if not change:
             obj.user = request.user
             cl = Client()
+            cl.change_password_handler = change_password_handler
+            cl.challenge_code_handler = challenge_code_handler
+
             cl.login(obj.username, obj.password)
 
 
