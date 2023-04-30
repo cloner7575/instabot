@@ -6,6 +6,8 @@ import re
 import time
 from multiprocessing import Process
 
+import django
+django.setup()
 from django.db.models import Count
 from instagrapi import Client
 from instagrapi.exceptions import LoginRequired,UserNotFound

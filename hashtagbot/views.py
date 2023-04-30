@@ -1,50 +1,84 @@
+import email
+import imaplib
 import json
+import random
+import re
 import time
-
+import django
+django.setup()
 from django.shortcuts import render
 from django.views import View
 
 from instagrapi import Client
 from instagrapi.exceptions import ChallengeRequired
+from instagrapi.mixins.challenge import ChallengeChoice
+
 # Create your views here.
-from .models import Worker, AccountInfo
+from hashtagbot.models import Worker, AccountInfo
 from multiprocessing import Process
 
-from .tasks import login, change_password_handler, challenge_code_handler
+from hashtagbot.tasks import login
+
+
+def change_password_handler(username):
+    # Simple way to generate a random string
+    chars = list("abcdefghijklmnopqrstuvwxyz1234567890!&£@#")
+    password = "".join(random.sample(chars, 8))
+    return password
+def get_code_from_sms(username):
+    while True:
+        code = input(f"Enter code (6 digits) for {username}: ").strip()
+        if code and code.isdigit():
+            return code
+    return None
+
+
+def challenge_code_handler(username, choice):
+    if choice == ChallengeChoice.SMS:
+        return get_code_from_sms(username)
+    elif choice == ChallengeChoice.EMAIL:
+        return get_code_from_email(username)
+    return False
+
+def get_code_from_email(username):
+    mail = imaplib.IMAP4_SSL("imap.gmail.com")
+    mail.login(user="luccopilot@gmail.com",password= "knjkjbxusnapdtlo")
+    mail.select("inbox")
+    result, data = mail.search(None, "(UNSEEN)")
+    assert result == "OK", "Error1 during get_code_from_email: %s" % result
+    ids = data.pop().split()
+    for num in reversed(ids):
+        mail.store(num, "+FLAGS", "\\Seen")  # mark as read
+        result, data = mail.fetch(num, "(RFC822)")
+        assert result == "OK", "Error2 during get_code_from_email: %s" % result
+        msg = email.message_from_string(data[0][1].decode())
+        payloads = msg.get_payload()
+        if not isinstance(payloads, list):
+            payloads = [msg]
+        code = None
+        for payload in payloads:
+            body = payload.get_payload(decode=True).decode()
+            if "<div" not in body:
+                continue
+            match = re.search(">([^>]*?({u})[^<]*?)<".format(u=username), body)
+            if not match:
+                continue
+            print("Match from email:", match.group(1))
+            match = re.search(r">(\d{6})<", body)
+            if not match:
+                print('Skip this email, "code" not found')
+                continue
+            code = match.group(1)
+            if code:
+                return code
+    return False
 
 
 def index(request):
 
     return render(request, 'index.html')
 
-# def worker_login(worker, accounts):
-#     try:
-#         cl = Client()
-#         cl.change_password_handler = change_password_handler
-#         cl.challenge_code_handler = challenge_code_handler
-#         cl.login(worker.username, worker.password)
-#         worker.is_working = True
-#         worker.save()
-#
-#         print("Login success")
-#         for account in accounts:
-#             user_info = cl.user_info_by_username(account.username).dict()
-#             phone_number = user_info['contact_phone_number']
-#             if phone_number:
-#                 account.phone_number = phone_number
-#                 account.is_business = True
-#             account.is_checked = True
-#             account.other_info = json.dumps(user_info)
-#             account.save()
-#             print(f"info of {account.username} is: {phone_number}")
-#             time.sleep(5)
-#         worker.is_working = False
-#         worker.save()
-#     except Exception as e:
-#         print(e)
-#         worker.is_working = False
-#         worker.save()
-#         return
+
 
 
 class Search(View):
