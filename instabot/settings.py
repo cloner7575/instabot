@@ -87,6 +87,7 @@ WSGI_APPLICATION = "instabot.wsgi.application"
 #         'PORT': '3306',
 #     }
 # }
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -120,7 +121,7 @@ LANGUAGE_CODE = "fa-ir"
 TIME_ZONE = "UTC"
 
 USE_I18N = True
-
+DEFAULT_CHARSET = 'utf-8'
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
