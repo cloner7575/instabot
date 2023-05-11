@@ -26,8 +26,8 @@ SECRET_KEY = "django-insecure-x00@d6496v=xpg+u(f*-5d6k1y2z-ba*plgzkg+1@7*r!m*gj9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mamadi.lucretius.network', 'localhost', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['https://*.mamadi.lucretius.network', 'https://*.127.0.0.1']
+ALLOWED_HOSTS = ['mamadi.lucretius.network', 'localhost', '127.0.0.1','185.119.196.238']
+CSRF_TRUSTED_ORIGINS = ['https://*.mamadi.lucretius.network', 'https://*.127.0.0.1','https://*.185.119.196.238']
 # Application definition
 CSRF_COOKIE_SECURE = False
 INSTALLED_APPS = [
