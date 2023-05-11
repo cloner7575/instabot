@@ -26,10 +26,10 @@ SECRET_KEY = "django-insecure-x00@d6496v=xpg+u(f*-5d6k1y2z-ba*plgzkg+1@7*r!m*gj9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mamadi.lucretius.network','localhost', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['https://*.mamadi.lucretius.network','https://*.127.0.0.1']
+ALLOWED_HOSTS = ['mamadi.lucretius.network', 'localhost', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://*.mamadi.lucretius.network', 'https://*.127.0.0.1']
 # Application definition
-CSRF_COOKIE_SECURE=False
+CSRF_COOKIE_SECURE = False
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-     'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -87,11 +87,11 @@ WSGI_APPLICATION = "instabot.wsgi.application"
 #         'PORT': '3306',
 #     }
 # }
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3"
+
     }
 }
 
@@ -121,7 +121,6 @@ LANGUAGE_CODE = "fa-ir"
 TIME_ZONE = "UTC"
 
 USE_I18N = True
-DEFAULT_CHARSET = 'utf-8'
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
